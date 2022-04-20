@@ -14,8 +14,6 @@ public class gol {
 
     public gol(int height, int width){
 
-        // this.setPreferredSize(new Dimension(width,height));
-
         this.col = width/w;
         this.row = height/w;
         this.board = new int[col][row];
@@ -88,7 +86,7 @@ public class gol {
         }
 
         board = nextGen;
-        prinfBoard(board);
+        // prinfBoard(board);
 
     }
 
@@ -113,7 +111,7 @@ public class gol {
     }
 
 
-    public static void prinfBoard(int[][]mat){
+    public static void printBoard(int[][]mat){
         for (int[] row : mat)
  
         // converting each row as string
@@ -125,13 +123,14 @@ public class gol {
 
 
     public static void main(String[] args) {
-        gol newgol = new gol(48,48);
+        gol newgol = new gol(64,64);
 
         
         int [][]currentBoard = newgol.getBoard();
 
-        prinfBoard(currentBoard);
+        printBoard(currentBoard);
         newgol.generate();
+        printBoard(newgol.getBoard());
 
         
 

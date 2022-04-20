@@ -14,15 +14,6 @@ public class MyPanel extends JPanel {
         this.setPreferredSize(new Dimension(50,50));
         this.canvaGol = new gol(200, 200);
 
-        // addMouseListener(new MouseInputAdapter(){
-        //     public void mousePressed(MouseEvent e){
-        //         canvaGol.generate();
-                
-
-        //     }
-        // });
-
-        
 
 
     }
@@ -48,17 +39,11 @@ public class MyPanel extends JPanel {
                 g2D.setColor(Color.gray);
                 g2D.setStroke(new BasicStroke(1));
                 g2D.drawRect(i*25, j*25, 25, 25);
-                // rect(i*w, j*w, w, w); 
-
-                // canvaGol.generate();
-
-    
+                
             }
-
-            
-
-            
         } 
+
+        //
 
         // addMouseListener(new MouseInputAdapter(){
         //     public void mousePressed(MouseEvent e){
