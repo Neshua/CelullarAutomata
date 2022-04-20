@@ -8,9 +8,9 @@ import javax.swing.*;
 
 public class gol {
 
-    int col, row;
-    int w = 8;
-    int [][]board;
+    private int col, row;
+    private int w = 8;
+    protected int [][]board;
 
     public gol(int height, int width){
 
@@ -27,11 +27,9 @@ public class gol {
 
     public int[][] getBoard(){
         return this.board;
-        
-
     }
 
-    public int getNumCollumn(){
+    public int getNumColumn(){
         return this.col;
     }
 
@@ -39,7 +37,7 @@ public class gol {
         return this.row;
     }
 
-    public void fill(){
+    private void fill(){
         Random state = new Random();
         int upperBound = 2;
 
@@ -50,10 +48,9 @@ public class gol {
                 // board[i][j] = 20;
             }
         }
-
     }
 
-    public void generate(){
+    private void iterate(){
         int[][] nextGen = new int[col][row];
 
         //looping through main board
@@ -79,8 +76,6 @@ public class gol {
 
                 // prinfBoard(nextGen);
 
-                
-        
             }
 
             // prinfBoard(nextGen);
@@ -92,7 +87,7 @@ public class gol {
 
     }
 
-    public int deadOrAlive(int currentState, int neighbors){
+    private int deadOrAlive(int currentState, int neighbors){
 
         if ((currentState == 1) && (neighbors < 2)){
             return  0;
@@ -123,6 +118,10 @@ public class gol {
 
     }
 
+    public void step(){
+
+    }
+
 
     public static void main(String[] args) {
         gol newgol = new gol(48,48);
@@ -131,9 +130,8 @@ public class gol {
         int [][]currentBoard = newgol.getBoard();
 
         prinfBoard(currentBoard);
-        newgol.generate();
+        newgol.iterate();
 
-        
 
 
         
