@@ -9,13 +9,16 @@ import java.awt.event.MouseListener;
 public class MyPanel extends JPanel {
 
     gol canvaGol;
-    int height=8, width=8; //set dimensions here
+    int height=25, width=25; //set dimensions here
+    boolean auto = false;
 
     MyPanel(){
-        this.setPreferredSize(new Dimension(50,50));
-        this.canvaGol = new gol(height, width);
 
+        this.setPreferredSize(new Dimension(625,625));
+        this.canvaGol = new gol(height, width);
+        
     }
+
 
 
     public void paint(Graphics g) {

@@ -26,14 +26,16 @@ public class gol {
         this.row = height;
         this.board = new int[col][row];
         
-        if (auto){
-            runAuto();
-        } else {
-            fill();
-        }
-
+        run();
 //        testBoard();
+    }
 
+    public gol(int height, int width, boolean auto){
+        this.col = width;
+        this.row = height;
+        this.board = new int[col][row];
+        this.auto = auto;
+        run();
     }
 
     public int[][] getBoard(){
@@ -190,11 +192,19 @@ public class gol {
         return board[x][y];
     }
 
-    private void runAuto(){ //iterate automatically for a given number of ticks.
+    private void autoRun(){ //iterate automatically for a given number of ticks.
         fill();
         for (int i=0; i<maxIterateCount;i++){
             pause();
             iterate();
+        }
+    }
+
+    private void run(){
+        if (auto){
+            autoRun();
+        } else {
+            fill();
         }
     }
 
