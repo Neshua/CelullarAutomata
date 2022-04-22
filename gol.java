@@ -10,7 +10,6 @@ import java.util.Scanner;
 import javax.swing.*;
 
 
-
 public class gol {
 
     private int col, row;
