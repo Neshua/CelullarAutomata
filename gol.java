@@ -1,16 +1,25 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 import java.awt.*;
 import java.awt.*;
+import java.util.Scanner;
 import javax.swing.*;
 
 
 
 public class gol {
 
-    int col, row;
-    int w = 8;
-    int [][]board;
+    private int col, row;
+    private int w = 8;
+    private int numStates = 2;
+    protected int [][]board;
+
+    private int maxIterateCount = 10;
+    private boolean auto = false;
+
 
     public gol(int height, int width){
 
@@ -21,15 +30,15 @@ public class gol {
 
         fill();
 
+//        testBoard();
+
     }
 
     public int[][] getBoard(){
         return this.board;
-        
-
     }
 
-    public int getNumCollumn(){
+    public int getNumColumn(){
         return this.col;
     }
 
@@ -37,34 +46,94 @@ public class gol {
         return this.row;
     }
 
-    public void fill(){
+    private void fill(){ //Fills each column as either 1 or 0
         Random state = new Random();
-        int upperBound = 2;
+        int upperBound = numStates;
 
-        //Fills each column as either 1 or 0
-        for(int i = 1; i< col-1;i++){
-            for(int j = 1; j< row-1 ; j++){
+
+        // Makes outer rims all 0 and randomizes inner matrix
+//        for(int i = 1; i< col-1;i++){
+//            for(int j = 1; j< row-1 ; j++){
+//                board[i][j] = state.nextInt(upperBound);
+//                // board[i][j] = 20;
+//            }
+//        }
+        for(int i = 0; i< col-1;i++){
+            for(int j = 0; j< row-1 ; j++){
                 board[i][j] = state.nextInt(upperBound);
-                // board[i][j] = 20;
             }
         }
 
     }
 
-    public void generate(){
+    private void testBoard() throws FileNotFoundException { //reads in a text file and creates a matrix from it
+        try {
+            File file = new File("test");
+            ArrayList<int[]> presetBoard = new ArrayList<>();
+
+            Scanner scLine = new Scanner(file);
+
+            while(scLine.hasNextLine()){ //Take each line from textfile and create an int array; add to presetboard
+                String nextLine = scLine.nextLine();
+                String newString = nextLine.replaceAll("[^-?\\d,]", "");
+                String[] extracted = newString.split(",");
+                presetBoard.add(toIntArray(extracted)) ;
+            }
+
+            int colDim = presetBoard.size();
+            int rowDim = presetBoard.get(0).length;
+
+            int[][] newBoard = new int[rowDim][colDim]; //make into a 2d int matrix of arrays
+            for (int i=0; i<rowDim;i++){
+                for (int j=0;j<colDim;j++){
+                    newBoard[i][j] = presetBoard.get(i)[j];
+                }
+            }
+
+            col = colDim;
+            row = rowDim;
+            board = newBoard;
+
+        } catch (FileNotFoundException e){
+            System.out.println("No File Found");
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+     * Converts a String array with numbers into an array of integers
+     * @param input String array with numbers
+     * @return integer array
+     */
+    private int[] toIntArray(String[] input){
+        int[] intArray = new int[input.length];
+        for (int i=0;i<input.length;i++){
+            intArray[i] = Integer.parseInt(input[i]);
+        }
+        return intArray;
+    }
+
+    private void iterate(){ //iterate to next state
         int[][] nextGen = new int[col][row];
 
         //looping through main board
 
-        for (int x = 1; x< col-1; x++){
-            for (int y = 1; y<row-1;y++){
+        for (int x = 0; x < row; x++) {
+            for (int y = 0; y < col; y++) {
 
                 int aliveNeighbors = 0;
 
                 // looping through the neighbors
-                for (int i = -1; i <2; i++){
-                    for(int j = -1; j <2; j++){
-                        aliveNeighbors += board[x+i][y+j];//count alive neighbors 
+                for (int i = -1; i < 2; i++) {
+                    for (int j = -1; j < 2; j++) {
+                        try {
+                            if (board[x + i][y + j] > Integer.MIN_VALUE) {
+                                aliveNeighbors += board[x + i][y + j];//count alive neighbors
+                            }
+                        } catch (ArrayIndexOutOfBoundsException e) {
+                            //do nothing
+                        }
                     }
                 }
 
@@ -74,34 +143,23 @@ public class gol {
                 int newState = deadOrAlive(board[x][y], aliveNeighbors);
 
                 nextGen[x][y] = newState;
-
-                // prinfBoard(nextGen);
-
-                
-        
             }
-
-            // prinfBoard(nextGen);
-
         }
-
         board = nextGen;
-        // prinfBoard(board);
-
+        printBoard(board);
     }
 
-    public int deadOrAlive(int currentState, int neighbors){
+    private int deadOrAlive(int currentState, int neighbors){
 
-        if ((currentState == 1) && (neighbors < 2)){
+        if ((currentState == 1) && (neighbors < 2)){ // alive and few neighbors --> die
             return  0;
         }
 
-        if ((currentState == 1) && (neighbors > 3 )){
+        if ((currentState == 1) && (neighbors > 3 )){ //alive and many neighbors --> die
             return 0;
-
         }
 
-        if ( (currentState ==0) && (neighbors == 3)) {
+        if ( (currentState ==0) && (neighbors == 3)) { //dead and 3 neighbors --> alive
             return 1;
         }
 
@@ -121,25 +179,21 @@ public class gol {
 
     }
 
-
-    public static void main(String[] args) {
-        gol newgol = new gol(64,64);
-
-        
-        int [][]currentBoard = newgol.getBoard();
-
-        printBoard(currentBoard);
-        newgol.generate();
-        printBoard(newgol.getBoard());
-
-        
-
-
-        
-    
+    /**
+     * Return value in a cell
+     * @param x row number
+     * @param y column number
+     * @return int value in the cell
+     */
+    private int getCell(int x, int y){
+        return board[x][y];
     }
 
+    public static void main(String[] args) {
+        gol newgol = new gol(48,48);
+        printBoard(newgol.getBoard());
+        newgol.iterate();
 
-
+    }
 
 }

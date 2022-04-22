@@ -15,5 +15,9 @@ public class MyFrame extends JFrame {
      this.pack();
      this.setLocationRelativeTo(null);
      this.setVisible(true);
-    }  
+    }
+
+    MyFrame(String title){
+        super(title);
+    }
 }
