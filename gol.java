@@ -1,5 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -206,6 +208,36 @@ public class gol {
     }
 
     /**
+     * Saves a created matrix as a textfile.
+     * @param mat int matrix to save
+     */
+    public static void saveMatrix(int[][] mat){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("What would you like to name the matrix?");
+        String filename = sc.next()+".txt";
+        try{
+            File file = new File(filename);
+            if (file.createNewFile()){
+                System.out.println("File "+filename + " created.");
+            } else {
+                System.out.println("Overwriting " + filename);
+            }
+            FileWriter writer = new FileWriter(filename);
+
+            for (int[] row : mat){
+                writer.write(Arrays.toString(row));
+                writer.write("\n");
+            }
+            writer.close();
+
+
+        } catch (IOException e){
+            System.out.println("An error occured.");
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * Return value in a cell
      * @param x row number
      * @param y column number
@@ -249,7 +281,7 @@ public class gol {
         gol newgol = new gol(48,48);
         printBoard(newgol.getBoard());
         newgol.iterate();
-
+        saveMatrix(newgol.getBoard());
     }
 
 }
