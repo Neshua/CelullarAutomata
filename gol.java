@@ -17,6 +17,8 @@ public class gol {
     private int col, row;
     private int numStates = 2;
     protected int [][]board;
+    private boolean stable = false;
+    private int numCells;
 
     private int maxIterateCount = 10;
     private double probAlive = 45;
@@ -108,6 +110,8 @@ public class gol {
             testBoard(loadFilename);
         }
 
+        numCells = row * col;
+
     }
 
     private void testBoard(String input) { //reads in a text file and creates a matrix from it
@@ -160,6 +164,7 @@ public class gol {
 
     void iterate(){ //iterate to next state
         int[][] nextGen = new int[col][row];
+        int changedCellCount = 0;
 
         //looping through main board
 
@@ -192,11 +197,20 @@ public class gol {
                     newState = simpleConway(board[x][y], aliveNeighbors);
                 }
 
+                if (newState == board[x][y]){
+                    changedCellCount++;
+                }
+
                 nextGen[x][y] = newState;
             }
         }
         board = nextGen;
         printBoard(board);
+
+        if (changedCellCount == numCells){
+            stable = true;
+        }
+
     }
 
     /**
@@ -290,6 +304,14 @@ public class gol {
     }
 
     /**
+     * Returns whether board is stable or not.
+     * @return true if board is stable, false otherwise.
+     */
+    public boolean isStable(){
+        return stable;
+    }
+
+    /**
      * Run method for automatic iteration.
      */
     private void autoRun(){ //iterate automatically for a given number of ticks.
@@ -313,7 +335,7 @@ public class gol {
 
     private void pause() {
         try{
-            Thread.sleep(4000);
+            Thread.sleep(500);
         } catch (InterruptedException e){
             System.out.println("InterruptedException");
         }

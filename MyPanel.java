@@ -12,7 +12,7 @@ import java.awt.event.MouseListener;
 public class MyPanel extends JPanel {
 
     gol canvaGol;
-    int height=25, width=25; //set dimensions here
+    int height=50, width=50; //set dimensions here
     boolean auto = false;
     private Timer t;
 
@@ -22,12 +22,12 @@ public class MyPanel extends JPanel {
 
     MyPanel(){
 
-        this.setPreferredSize(new Dimension(625,625));
+        this.setPreferredSize(new Dimension(width*25,height*25));
         this.canvaGol = new gol(height, width);
 //        this.canvaGol = new gol("test", false);
+
         t = new Timer(300, new MoveListener());
     }
-
 
 
     public void paint(Graphics g) {
@@ -74,8 +74,9 @@ public class MyPanel extends JPanel {
       private class MoveListener implements ActionListener{
             @Override
             public void actionPerformed(ActionEvent e){
-                canvaGol.iterate();
-                repaint();
+//                while (!canvaGol.isStable()){
+                    canvaGol.iterate();
+                    repaint();
             }
         }
 }
