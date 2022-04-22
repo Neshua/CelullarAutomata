@@ -18,6 +18,7 @@ public class gol {
 
     private int maxIterateCount = 10;
     private boolean auto = false;
+    private boolean generateNew = true;
 
 
     public gol(int height, int width){
@@ -30,11 +31,12 @@ public class gol {
 //        testBoard();
     }
 
-    public gol(int height, int width, boolean auto){
+    public gol(int height, int width, boolean auto, boolean generateNew ){
         this.col = width;
         this.row = height;
         this.board = new int[col][row];
         this.auto = auto;
+        this.generateNew = generateNew;
         run();
     }
 
@@ -51,26 +53,30 @@ public class gol {
     }
 
     private void fill(){ //Fills each column as either 1 or 0
-        Random state = new Random();
-        int upperBound = numStates;
+        if (generateNew){
+            Random state = new Random();
+            int upperBound = numStates;
 
-
-        // Makes outer rims all 0 and randomizes inner matrix
+            // Makes outer rims all 0 and randomizes inner matrix
 //        for(int i = 1; i< col-1;i++){
 //            for(int j = 1; j< row-1 ; j++){
 //                board[i][j] = state.nextInt(upperBound);
 //                // board[i][j] = 20;
 //            }
 //        }
-        for(int i = 0; i< col;i++){
-            for(int j = 0; j< row; j++){
-                board[i][j] = state.nextInt(upperBound);
+            for(int i = 0; i< col;i++){
+                for(int j = 0; j< row; j++){
+                    board[i][j] = state.nextInt(upperBound);
+                }
             }
+
+        } else {
+            testBoard();
         }
 
     }
 
-    private void testBoard() throws FileNotFoundException { //reads in a text file and creates a matrix from it
+    private void testBoard() { //reads in a text file and creates a matrix from it
         try {
             File file = new File("test");
             ArrayList<int[]> presetBoard = new ArrayList<>();
