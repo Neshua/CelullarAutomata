@@ -58,8 +58,8 @@ public class gol {
 //                // board[i][j] = 20;
 //            }
 //        }
-        for(int i = 0; i< col-1;i++){
-            for(int j = 0; j< row-1 ; j++){
+        for(int i = 0; i< col;i++){
+            for(int j = 0; j< row; j++){
                 board[i][j] = state.nextInt(upperBound);
             }
         }
@@ -75,7 +75,7 @@ public class gol {
 
             while(scLine.hasNextLine()){ //Take each line from textfile and create an int array; add to presetboard
                 String nextLine = scLine.nextLine();
-                String newString = nextLine.replaceAll("[^-?\\d,]", "");
+                String newString = nextLine.replaceAll("[^-?\\d,]", ""); //regex: not digits and comma
                 String[] extracted = newString.split(",");
                 presetBoard.add(toIntArray(extracted)) ;
             }
