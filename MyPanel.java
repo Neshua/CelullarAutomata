@@ -9,12 +9,11 @@ import java.awt.event.MouseListener;
 public class MyPanel extends JPanel {
 
     gol canvaGol;
+    int height=8, width=8; //set dimensions here
 
     MyPanel(){
         this.setPreferredSize(new Dimension(50,50));
-        this.canvaGol = new gol(200, 200);
-
-
+        this.canvaGol = new gol(height, width);
 
     }
 
@@ -24,8 +23,8 @@ public class MyPanel extends JPanel {
         Graphics2D g2D = (Graphics2D) g;
         // gol canvaGol = new gol(200, 200);
 
-        for(int i = 0; i< 25; i++){
-            for( int j = 0; j<25;j++){
+        for(int i = 0; i< height; i++){
+            for( int j = 0; j<width;j++){
                 if (canvaGol.getBoard()[i][j] == 1){
                     g2D.setPaint(Color.green);
                     g2D.fillRect(i*25, j*25, 25, 25);

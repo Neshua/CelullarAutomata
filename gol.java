@@ -13,7 +13,6 @@ import javax.swing.*;
 public class gol {
 
     private int col, row;
-    private int w = 8;
     private int numStates = 2;
     protected int [][]board;
 
@@ -23,8 +22,8 @@ public class gol {
 
     public gol(int height, int width){
 
-        this.col = width/w;
-        this.row = height/w;
+        this.col = width;
+        this.row = height;
         this.board = new int[col][row];
         
 
