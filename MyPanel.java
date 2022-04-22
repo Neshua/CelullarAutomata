@@ -1,22 +1,26 @@
 import javax.swing.JPanel;
 import javax.swing.event.MouseInputAdapter;
-
+import javax.swing.Timer;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import org.w3c.dom.events.MouseEvent;
 
 import java.awt.*;
 import java.awt.event.MouseListener;
+
 
 public class MyPanel extends JPanel {
 
     gol canvaGol;
     int height=25, width=25; //set dimensions here
     boolean auto = false;
+    private Timer t;
 
     MyPanel(){
 
         this.setPreferredSize(new Dimension(625,625));
         this.canvaGol = new gol(height, width);
-        
+        t = new Timer(300, new MoveListener());
     }
 
 
@@ -45,6 +49,8 @@ public class MyPanel extends JPanel {
             }
         } 
 
+        t.start();
+
         //
 
         // addMouseListener(new MouseInputAdapter(){
@@ -54,8 +60,17 @@ public class MyPanel extends JPanel {
 
         //     }
         // });
+        
 
         
      
     }
+
+      private class MoveListener implements ActionListener{
+            @Override
+            public void actionPerformed(ActionEvent e){
+                canvaGol.iterate();
+                repaint();
+            }
+        }
 }

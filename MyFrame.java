@@ -17,6 +17,7 @@ public class MyFrame extends JFrame {
      this.setVisible(true);
     }
 
+    
     MyFrame(String title){
         super(title);
     }

@@ -132,7 +132,7 @@ public class gol {
         return intArray;
     }
 
-    private void iterate(){ //iterate to next state
+    void iterate(){ //iterate to next state
         int[][] nextGen = new int[col][row];
 
         //looping through main board
