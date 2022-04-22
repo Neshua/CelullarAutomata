@@ -44,10 +44,18 @@ public class gol {
         return this.board;
     }
 
+    /**
+     * Returns the number of columns
+     * @return number of columns
+     */
     public int getNumColumn(){
         return this.col;
     }
 
+    /**
+     * Returns the number of rows
+     * @return number of rows
+     */
     public int getNumRow(){
         return this.row;
     }
@@ -70,7 +78,7 @@ public class gol {
                 }
             }
 
-        } else {
+        } else { // generate preset
             testBoard();
         }
 
@@ -135,7 +143,7 @@ public class gol {
                 int aliveNeighbors = 0;
 
                 // looping through the neighbors
-                for (int i = -1; i < 2; i++) {
+                for (int i = -1; i < 2; i++) { //Moore's neighborhood
                     for (int j = -1; j < 2; j++) {
                         try {
                             if (board[x + i][y + j] > Integer.MIN_VALUE) {
@@ -159,7 +167,13 @@ public class gol {
         printBoard(board);
     }
 
-    private int deadOrAlive(int currentState, int neighbors){
+    /**
+     * Determines if a cell is dead or alive based on Conway's rules.
+     * @param currentState current state of a cell
+     * @param neighbors number of alive neighbors
+     * @return int of new state of the cell
+     */
+    private int deadOrAlive(int currentState, int neighbors){ //Conway
 
         if ((currentState == 1) && (neighbors < 2)){ // alive and few neighbors --> die
             return  0;
@@ -178,6 +192,10 @@ public class gol {
         }
     }
 
+    /**
+     * Prints the board as an array
+     * @param mat
+     */
     public static void printBoard(int[][]mat){
         for (int[] row : mat)
  
@@ -185,7 +203,6 @@ public class gol {
         // and then printing in a separate line
         System.out.println(Arrays.toString(row));
         System.out.println("---------------------------------------");
-
     }
 
     /**
@@ -198,6 +215,9 @@ public class gol {
         return board[x][y];
     }
 
+    /**
+     * Run method for automatic iteration.
+     */
     private void autoRun(){ //iterate automatically for a given number of ticks.
         fill();
         for (int i=0; i<maxIterateCount;i++){
@@ -206,6 +226,9 @@ public class gol {
         }
     }
 
+    /**
+     * Runs gol. Checks if it should auto iterate or not here.
+     */
     private void run(){
         if (auto){
             autoRun();
