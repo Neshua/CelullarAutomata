@@ -26,8 +26,11 @@ public class gol {
         this.row = height;
         this.board = new int[col][row];
         
-
-        fill();
+        if (auto){
+            runAuto();
+        } else {
+            fill();
+        }
 
 //        testBoard();
 
@@ -167,7 +170,6 @@ public class gol {
         }
     }
 
-
     public static void printBoard(int[][]mat){
         for (int[] row : mat)
  
@@ -186,6 +188,22 @@ public class gol {
      */
     private int getCell(int x, int y){
         return board[x][y];
+    }
+
+    private void runAuto(){ //iterate automatically for a given number of ticks.
+        fill();
+        for (int i=0; i<maxIterateCount;i++){
+            pause();
+            iterate();
+        }
+    }
+
+    private void pause() {
+        try{
+            Thread.sleep(4000);
+        } catch (InterruptedException e){
+            System.out.println("InterruptedException");
+        }
     }
 
     public static void main(String[] args) {
