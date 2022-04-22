@@ -16,10 +16,15 @@ public class MyPanel extends JPanel {
     boolean auto = false;
     private Timer t;
 
+    Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
+    int screenHeight = screensize.height;
+    int screenWidth = screensize.width;
+
     MyPanel(){
 
         this.setPreferredSize(new Dimension(625,625));
         this.canvaGol = new gol(height, width);
+//        this.canvaGol = new gol("test", false);
         t = new Timer(300, new MoveListener());
     }
 
@@ -30,8 +35,8 @@ public class MyPanel extends JPanel {
         Graphics2D g2D = (Graphics2D) g;
         // gol canvaGol = new gol(200, 200);
 
-        for(int i = 0; i< height; i++){
-            for( int j = 0; j<width;j++){
+        for(int i = 0; i< canvaGol.getNumRow(); i++){
+            for( int j = 0; j<canvaGol.getNumColumn();j++){
                 if (canvaGol.getBoard()[i][j] == 1){
                     g2D.setPaint(Color.green);
                     g2D.fillRect(i*25, j*25, 25, 25);

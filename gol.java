@@ -19,8 +19,12 @@ public class gol {
     protected int [][]board;
 
     private int maxIterateCount = 10;
-    private boolean auto = false;
-    private boolean generateNew = true;
+    private double probAlive = 45;
+    private String rule = "Simple";
+
+    private boolean auto;
+    private boolean generateNew;
+    private String loadFilename;
 
 
     public gol(int height, int width){
@@ -28,19 +32,33 @@ public class gol {
         this.col = width;
         this.row = height;
         this.board = new int[col][row];
+        this.auto = false;
+        this.generateNew = true;
+        this.loadFilename = null;
         
         run();
-//        testBoard();
     }
 
-    public gol(int height, int width, boolean auto, boolean generateNew ){
+    public gol(int height, int width, boolean auto){
         this.col = width;
         this.row = height;
         this.board = new int[col][row];
         this.auto = auto;
-        this.generateNew = generateNew;
+        this.generateNew = true;
+        this.loadFilename = null;
         run();
     }
+
+    public gol(String filename, boolean auto){
+        this.col = 0;
+        this.row = 0;
+        this.board = new int[col][row];
+        this.auto = auto;
+        this.generateNew = false;
+        this.loadFilename = filename;
+        run();
+    }
+
 
     public int[][] getBoard(){
         return this.board;
@@ -76,19 +94,25 @@ public class gol {
 //        }
             for(int i = 0; i< col;i++){
                 for(int j = 0; j< row; j++){
-                    board[i][j] = state.nextInt(upperBound);
+//                    board[i][j] = state.nextInt(upperBound);
+                    int num = state.nextInt(100);
+                    if (num < probAlive){
+                        board[i][j] = 1;
+                    } else {
+                        board[i][j] = 0;
+                    }
                 }
             }
 
         } else { // generate preset
-            testBoard();
+            testBoard(loadFilename);
         }
 
     }
 
-    private void testBoard() { //reads in a text file and creates a matrix from it
+    private void testBoard(String input) { //reads in a text file and creates a matrix from it
         try {
-            File file = new File("test");
+            File file = new File(input);
             ArrayList<int[]> presetBoard = new ArrayList<>();
 
             Scanner scLine = new Scanner(file);
@@ -160,7 +184,13 @@ public class gol {
                 aliveNeighbors -= board[x][y]; // delete self count
                 // System.out.println("live["+x+"]["+y+"]:"+aliveNeighbors );
 
-                int newState = deadOrAlive(board[x][y], aliveNeighbors);
+                int newState;
+
+                if (rule.equals("Conway")){
+                    newState = deadOrAlive(board[x][y], aliveNeighbors);
+                } else {
+                    newState = simpleConway(board[x][y], aliveNeighbors);
+                }
 
                 nextGen[x][y] = newState;
             }
@@ -175,7 +205,7 @@ public class gol {
      * @param neighbors number of alive neighbors
      * @return int of new state of the cell
      */
-    private int deadOrAlive(int currentState, int neighbors){ //Conway
+    private int deadOrAlive(int currentState, int neighbors){
 
         if ((currentState == 1) && (neighbors < 2)){ // alive and few neighbors --> die
             return  0;
@@ -189,6 +219,18 @@ public class gol {
             return 1;
         }
 
+        else {
+            return currentState;
+        }
+    }
+
+    private int simpleConway(int currentState, int neighbors){
+        if ((currentState == 1) && (neighbors < 3)){
+            return 0;
+        }
+        if ( (currentState ==0) && (neighbors > 4)) {
+            return 1;
+        }
         else {
             return currentState;
         }
