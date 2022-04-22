@@ -7,8 +7,6 @@ import java.util.Random;
 import java.awt.*;
 import java.awt.*;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.swing.*;
 
 
@@ -24,8 +22,6 @@ public class gol {
     private boolean auto = false;
 
     public gol(int height, int width){
-
-//         this.setPreferredSize(new Dimension(width,height));
 
         this.col = width/w;
         this.row = height/w;
@@ -53,7 +49,6 @@ public class gol {
     private void fill(){ //Fills each column as either 1 or 0
         Random state = new Random();
         int upperBound = numStates;
-
 
 
         // Makes outer rims all 0 and randomizes inner matrix
@@ -151,16 +146,16 @@ public class gol {
 
                 nextGen[x][y] = newState;
 
-                // prinfBoard(nextGen);
+                // printBoard(nextGen);
 
             }
 
-            // prinfBoard(nextGen);
+            // printBoard(nextGen);
 
         }
 
         board = nextGen;
-        prinfBoard(board);
+        printBoard(board);
 
     }
 
@@ -184,7 +179,7 @@ public class gol {
     }
 
 
-    public static void prinfBoard(int[][]mat){
+    public static void printBoard(int[][]mat){
         for (int[] row : mat)
  
         // converting each row as string
@@ -201,16 +196,9 @@ public class gol {
 
     public static void main(String[] args) {
         gol newgol = new gol(48,48);
-        prinfBoard(newgol.getBoard());
+        printBoard(newgol.getBoard());
         newgol.iterate();
 
-
-
-        
-    
     }
-
-
-
 
 }
