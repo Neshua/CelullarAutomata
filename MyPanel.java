@@ -12,9 +12,10 @@ import java.awt.event.MouseListener;
 public class MyPanel extends JPanel {
 
     gol canvaGol;
-    int height=50, width=50; //set dimensions here
+    int height=200, width=200; //set dimensions here
     boolean auto = false;
     private Timer t;
+    int cellSize = 25;
 
     Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
     int screenHeight = screensize.height;
@@ -22,8 +23,13 @@ public class MyPanel extends JPanel {
 
     MyPanel(){
 
-        this.setPreferredSize(new Dimension(width*25,height*25));
+        //prefer 625*625
+//        this.setPreferredSize(new Dimension(width*25,height*25));
+        this.cellSize = (625/Math.max(width, height));
+        this.setPreferredSize(new Dimension(cellSize*width,cellSize*height));
         this.canvaGol = new gol(height, width);
+
+        System.out.println(cellSize);
 //        this.canvaGol = new gol("test", false);
 
         t = new Timer(300, new MoveListener());
@@ -39,17 +45,20 @@ public class MyPanel extends JPanel {
             for( int j = 0; j<canvaGol.getNumColumn();j++){
                 if (canvaGol.getBoard()[i][j] == 1){
                     g2D.setPaint(Color.green);
-                    g2D.fillRect(i*25, j*25, 25, 25);
+//                    g2D.fillRect(i*25, j*25, 25, 25);
+                    g2D.fillRect(i*cellSize, j*cellSize, cellSize, cellSize);
                     
                 }
                 else{
                     g2D.setPaint(Color.blue);
-                    g2D.fillRect(i*25, j*25, 25, 25);
+//                    g2D.fillRect(i*25, j*25, 25, 25);
+                    g2D.fillRect(i*cellSize, j*cellSize, cellSize, cellSize);
                     
                 }
                 g2D.setColor(Color.gray);
                 g2D.setStroke(new BasicStroke(1));
-                g2D.drawRect(i*25, j*25, 25, 25);
+//                g2D.drawRect(i*25, j*25, 25, 25);
+                g2D.drawRect(i*cellSize, j*cellSize, cellSize, cellSize);
                 
             }
         } 
