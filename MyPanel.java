@@ -21,7 +21,7 @@ public class MyPanel extends JPanel {
     int screenHeight = screensize.height;
     int screenWidth = screensize.width;
 
-    MyPanel(){
+    MyPanel() {
 
         //prefer 625*625
 //        this.setPreferredSize(new Dimension(width*25,height*25));
@@ -32,6 +32,10 @@ public class MyPanel extends JPanel {
         System.out.println(cellSize);
 //        this.canvaGol = new gol("test", false);
 
+        animate();
+    }
+
+    public void animate(){
         t = new Timer(300, new MoveListener());
     }
 
@@ -48,6 +52,11 @@ public class MyPanel extends JPanel {
 //                    g2D.fillRect(i*25, j*25, 25, 25);
                     g2D.fillRect(i*cellSize, j*cellSize, cellSize, cellSize);
                     
+                }
+                else if (canvaGol.getBoard()[i][j] == 2){
+                    g2D.setPaint(Color.yellow);
+//                    g2D.fillRect(i*25, j*25, 25, 25);
+                    g2D.fillRect(i*cellSize, j*cellSize, cellSize, cellSize);
                 }
                 else{
                     g2D.setPaint(Color.blue);
@@ -82,10 +91,11 @@ public class MyPanel extends JPanel {
 
       private class MoveListener implements ActionListener{
             @Override
-            public void actionPerformed(ActionEvent e){
-//                while (!canvaGol.isStable()){
+            public void actionPerformed(ActionEvent e) {
+                if (!canvaGol.isStable()) {
                     canvaGol.iterate();
                     repaint();
+                }
             }
         }
 }

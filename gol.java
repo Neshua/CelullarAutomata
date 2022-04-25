@@ -208,6 +208,7 @@ public class gol {
         printBoard(board);
 
         if (changedCellCount == numCells){
+            sand();
             stable = true;
         }
 
@@ -248,6 +249,38 @@ public class gol {
         else {
             return currentState;
         }
+    }
+
+    private void sand(){
+        int[][] nextGen = new int[col][row];
+        int[][] directions = new int[][]{{-1,0},{0,-1},{0,1},{1,0}};
+
+        //looping through main board
+        for (int x = 0; x < row; x++) {
+            for (int y = 0; y < col; y++) {
+
+
+                if (board[x][y] == 1){
+                    // looping through the neighbors
+                    for (int[] d : directions) { //N,E,W,S
+                        try {
+                            if (board[x + d[0]][y + d[1]] == 0) {
+                                nextGen[x][y] = 2;//count alive neighbors
+                                break;
+                            } else {
+                                nextGen[x][y] = board[x][y];
+                            }
+                        } catch (ArrayIndexOutOfBoundsException e) {
+                            //do nothing
+                        }
+                    }
+                } else {
+                    nextGen[x][y] = board[x][y];
+                }
+            }
+        }
+        board = nextGen;
+        printBoard(board);
     }
 
     /**
@@ -314,9 +347,9 @@ public class gol {
     /**
      * Run method for automatic iteration.
      */
-    private void autoRun(){ //iterate automatically for a given number of ticks.
+    private void autoRun(){ //iterate automatically until stable.
         fill();
-        for (int i=0; i<maxIterateCount;i++){
+        while (!stable){
             pause();
             iterate();
         }
@@ -342,10 +375,10 @@ public class gol {
     }
 
     public static void main(String[] args) {
-        gol newgol = new gol(48,48);
-        printBoard(newgol.getBoard());
-        newgol.iterate();
-        saveMatrix(newgol.getBoard());
+        gol newgol = new gol(20,20, true);
+//        printBoard(newgol.getBoard());
+//        newgol.iterate();
+//        saveMatrix(newgol.getBoard());
     }
 
 }
