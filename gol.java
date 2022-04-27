@@ -21,7 +21,7 @@ public class gol {
     private int numCells;
 
     private int maxIterateCount = 10;
-    private int probAlive = 45;
+    private int probAlive = 40;
     private String rule = "Simple";
 
     private boolean auto;

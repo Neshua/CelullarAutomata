@@ -7,12 +7,13 @@ import org.w3c.dom.events.MouseEvent;
 
 import java.awt.*;
 import java.awt.event.MouseListener;
+import java.util.Random;
 
 
 public class MyPanel extends JPanel {
 
     gol canvaGol;
-    int height=200, width=200; //set dimensions here
+    int height=150, width=150; //set dimensions here
     boolean auto = false;
     private Timer t;
     int cellSize = 25;
@@ -41,20 +42,28 @@ public class MyPanel extends JPanel {
 
 
     public void paint(Graphics g) {
-  
+        Color beach = new Color(254, 255, 188);
+        Color grass2 = new Color(0,141,5);
+
         Graphics2D g2D = (Graphics2D) g;
         // gol canvaGol = new gol(200, 200);
 
         for(int i = 0; i< canvaGol.getNumRow(); i++){
             for( int j = 0; j<canvaGol.getNumColumn();j++){
                 if (canvaGol.getBoard()[i][j] == 1){
-                    g2D.setPaint(Color.green);
+                    Random r = new Random();
+                    int a = r.nextInt(2);
+                    if (a == 1 ) {
+                        g2D.setPaint(Color.green);
+                    } else {
+                        g2D.setPaint(grass2);
+                    }
 //                    g2D.fillRect(i*25, j*25, 25, 25);
                     g2D.fillRect(i*cellSize, j*cellSize, cellSize, cellSize);
                     
                 }
                 else if (canvaGol.getBoard()[i][j] == 2){
-                    g2D.setPaint(Color.yellow);
+                    g2D.setPaint(beach);
 //                    g2D.fillRect(i*25, j*25, 25, 25);
                     g2D.fillRect(i*cellSize, j*cellSize, cellSize, cellSize);
                 }
