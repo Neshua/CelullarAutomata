@@ -33,6 +33,9 @@ public class MyPanel extends JPanel {
         System.out.println(cellSize);
 //        this.canvaGol = new gol("test", false);
 
+        Button stepButton = new Button("Step");
+        this.add(stepButton);
+
         animate();
     }
 
