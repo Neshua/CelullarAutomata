@@ -205,7 +205,7 @@ public class gol {
             }
         }
         board = nextGen;
-        printBoard(board);
+        //printBoard(board);
 
         if (changedCellCount == numCells){
             sand();
