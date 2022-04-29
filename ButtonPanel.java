@@ -5,9 +5,11 @@ import java.awt.event.ActionListener;
 
 public class ButtonPanel extends JPanel implements ActionListener {
     Button stepButton, runButton, stopButton;
+    MyPanel gridPanel;
 
-    ButtonPanel(JFrame frame, JPanel gridPanel){
+    ButtonPanel(JFrame frame, MyPanel gridPanel){
 
+        this.gridPanel = gridPanel;
 
         stepButton = new Button("Step");
         runButton = new Button("Run");
@@ -43,6 +45,8 @@ public class ButtonPanel extends JPanel implements ActionListener {
             // run through entire iteration
             // run through entire iteration
             System.out.println("RUN RUN .. RUN RUN ... CAN'T KEEP RUNNING AWAAAAY ");
+
+            gridPanel.animate();
         }
         else if(buttonClicked.equals(stopButton)){
             // run through entire iteration
