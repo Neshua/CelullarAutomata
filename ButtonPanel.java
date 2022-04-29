@@ -19,7 +19,10 @@ public class ButtonPanel extends JPanel implements ActionListener {
         this.add(runButton);
         this.add(stopButton);
 
-        //System.out.println(gridPanel.getPreferredSize().width );
+        stepButton.addActionListener(this);
+        runButton.addActionListener(this);
+        stopButton.addActionListener(this);
+
         this.setBounds(gridPanel.getPreferredSize().width, 10, 100, 100);
 
 
@@ -29,7 +32,7 @@ public class ButtonPanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent actionEvent){
 
-        JButton buttonClicked = (JButton) actionEvent.getSource();
+        Button buttonClicked = (Button) actionEvent.getSource();
 
         if(buttonClicked.equals(stepButton)){
             //Step once through iteration
