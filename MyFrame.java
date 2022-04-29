@@ -11,10 +11,10 @@ public class MyFrame extends JFrame {
  
     MyFrame(){
 
-        this.setSize(new Dimension((int) (screensize.width * .5), (int) (screensize.height *.005)));
+        this.setSize(new Dimension (screensize.width / 2, screensize.height));
 
         panel = new MyPanel();
-        buttonPanel = new ButtonPanel(this);
+        buttonPanel = new ButtonPanel(this, panel);
 
         // mygol = new gol(500,500);
         // mygol.generate();
@@ -23,7 +23,7 @@ public class MyFrame extends JFrame {
 
          this.add(buttonPanel);
          this.add(panel);
-         this.pack();
+         //this.pack();
          this.setLocationRelativeTo(null);
          this.setVisible(true);
 
