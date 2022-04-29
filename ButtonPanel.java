@@ -13,12 +13,14 @@ public class ButtonPanel extends JPanel implements ActionListener {
         runButton = new Button("Run");
         stopButton = new Button("Stop");
 
+        //this.setLayout(new FlowLayout());
+
         this.add(stepButton);
         this.add(runButton);
         this.add(stopButton);
 
-        System.out.println(gridPanel.getWidth());
-        this.setBounds(gridPanel.getWidth() + 50, gridPanel.getHeight(), 100, 100);
+        //System.out.println(gridPanel.getPreferredSize().width );
+        this.setBounds(gridPanel.getPreferredSize().width, 10, 100, 100);
 
 
     }

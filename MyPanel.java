@@ -24,14 +24,10 @@ public class MyPanel extends JPanel {
 
     MyPanel() {
 
-        //prefer 625*625
-        this.setPreferredSize(new Dimension(width*25,height*25));
+
         this.cellSize = (625/Math.max(width, height));
         this.setPreferredSize(new Dimension(cellSize*width,cellSize*height));
         this.canvaGol = new gol(height, width);
-
-        //System.out.println(cellSize);
-//        this.canvaGol = new gol("test", false);
 
         animate();
     }
