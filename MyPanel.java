@@ -15,7 +15,7 @@ public class MyPanel extends JPanel {
     gol canvaGol;
     int height=150, width=150; //set dimensions here
     boolean auto = false;
-    private Timer t;
+    public Timer t;
     int cellSize = 25;
 
     Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -77,7 +77,7 @@ public class MyPanel extends JPanel {
             }
         } 
 
-        t.start();
+        //t.start();
 
         //
 
@@ -88,10 +88,9 @@ public class MyPanel extends JPanel {
 
         //     }
         // });
-        
 
-        
-     
+
+
     }
 
       private class MoveListener implements ActionListener{
