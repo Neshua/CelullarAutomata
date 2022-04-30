@@ -17,6 +17,7 @@ public class MyPanel extends JPanel {
     boolean auto = false;
     private Timer t;
     int cellSize = 25;
+    boolean cave = true;
 
     Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
     int screenHeight = screensize.height;
@@ -44,42 +45,70 @@ public class MyPanel extends JPanel {
     public void paint(Graphics g) {
         Color beach = new Color(254, 255, 188);
         Color grass2 = new Color(0,141,5);
+        Color brown = new Color(138, 93, 15);
 
         Graphics2D g2D = (Graphics2D) g;
         // gol canvaGol = new gol(200, 200);
 
-        for(int i = 0; i< canvaGol.getNumRow(); i++){
-            for( int j = 0; j<canvaGol.getNumColumn();j++){
-                if (canvaGol.getBoard()[i][j] == 1){
-                    Random r = new Random();
-                    int a = r.nextInt(2);
-                    if (a == 1 ) {
-                        g2D.setPaint(Color.green);
+        if (cave) {
+            for (int i = 0; i < canvaGol.getNumRow(); i++) {
+                for (int j = 0; j < canvaGol.getNumColumn(); j++) {
+                    if (canvaGol.getBoard()[i][j] == 1) {
+                        g2D.setPaint(brown);
+//                    g2D.fillRect(i*25, j*25, 25, 25);
+                        g2D.fillRect(i * cellSize, j * cellSize, cellSize, cellSize);
+                    } else if (canvaGol.getBoard()[i][j] == 2) {
+                        g2D.setPaint(brown);
+//                    g2D.fillRect(i*25, j*25, 25, 25);
+                        g2D.fillRect(i * cellSize, j * cellSize, cellSize, cellSize);
                     } else {
-                        g2D.setPaint(grass2);
+                        g2D.setPaint(Color.black);
+//                    g2D.fillRect(i*25, j*25, 25, 25);
+                        g2D.fillRect(i * cellSize, j * cellSize, cellSize, cellSize);
                     }
-//                    g2D.fillRect(i*25, j*25, 25, 25);
-                    g2D.fillRect(i*cellSize, j*cellSize, cellSize, cellSize);
-                    
-                }
-                else if (canvaGol.getBoard()[i][j] == 2){
-                    g2D.setPaint(beach);
-//                    g2D.fillRect(i*25, j*25, 25, 25);
-                    g2D.fillRect(i*cellSize, j*cellSize, cellSize, cellSize);
-                }
-                else{
-                    g2D.setPaint(Color.blue);
-//                    g2D.fillRect(i*25, j*25, 25, 25);
-                    g2D.fillRect(i*cellSize, j*cellSize, cellSize, cellSize);
-                    
-                }
-                g2D.setColor(Color.gray);
-                g2D.setStroke(new BasicStroke(1));
+                    g2D.setColor(Color.gray);
+                    g2D.setStroke(new BasicStroke(1));
 //                g2D.drawRect(i*25, j*25, 25, 25);
-                g2D.drawRect(i*cellSize, j*cellSize, cellSize, cellSize);
-                
+                    g2D.drawRect(i*cellSize, j*cellSize, cellSize, cellSize);
+                }
             }
-        } 
+        }
+        else {
+            for (int i = 0; i < canvaGol.getNumRow(); i++) {
+                for (int j = 0; j < canvaGol.getNumColumn(); j++) {
+                    if (canvaGol.getBoard()[i][j] == 1) {
+                        Random r = new Random();
+                        int a = r.nextInt(2);
+                        if (a == 1) {
+                            g2D.setPaint(Color.green);
+                        } else {
+                            g2D.setPaint(grass2);
+                        }
+//                    g2D.fillRect(i*25, j*25, 25, 25);
+                        g2D.fillRect(i * cellSize, j * cellSize, cellSize, cellSize);
+
+                    } else if (canvaGol.getBoard()[i][j] == 2) {
+                        g2D.setPaint(beach);
+//                    g2D.fillRect(i*25, j*25, 25, 25);
+                        g2D.fillRect(i * cellSize, j * cellSize, cellSize, cellSize);
+                    } else {
+                        g2D.setPaint(Color.blue);
+//                    g2D.fillRect(i*25, j*25, 25, 25);
+                        g2D.fillRect(i * cellSize, j * cellSize, cellSize, cellSize);
+
+                    }
+                    g2D.setColor(Color.gray);
+                    g2D.setStroke(new BasicStroke(1));
+//                g2D.drawRect(i*25, j*25, 25, 25);
+                    g2D.drawRect(i*cellSize, j*cellSize, cellSize, cellSize);
+                }
+            }
+
+        }
+
+
+
+
 
         t.start();
 
