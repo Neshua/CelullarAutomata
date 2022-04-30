@@ -29,7 +29,7 @@ public class MyPanel extends JPanel {
         this.setPreferredSize(new Dimension(cellSize*width,cellSize*height));
         this.canvaGol = new gol(height, width);
 
-        //animate();
+        animate();
     }
 
     public void animate(){

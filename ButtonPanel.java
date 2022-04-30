@@ -40,6 +40,8 @@ public class ButtonPanel extends JPanel implements ActionListener {
             //Step once through iteration
 
             System.out.println("LEFT FOOT TWO STEPS ... SLIDED TO THE RIGHT!!!... CRIS CROSS!! ... CHA CHA REAL SMOOTH ");
+
+            gridPanel.repaint();
         }
         else if(buttonClicked.equals(runButton)){
             // run through entire iteration
