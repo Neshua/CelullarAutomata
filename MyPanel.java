@@ -17,7 +17,7 @@ public class MyPanel extends JPanel {
     boolean auto = false;
     public Timer t;
     int cellSize = 25;
-    boolean cave = true;
+    boolean cave = false;
 
     Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
     int screenHeight = screensize.height;
