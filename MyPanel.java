@@ -15,7 +15,7 @@ public class MyPanel extends JPanel {
     gol canvaGol;
     int height=150, width=150; //set dimensions here
     boolean auto = false;
-    private Timer t;
+    public Timer t;
     int cellSize = 25;
     boolean cave = true;
 
@@ -25,14 +25,10 @@ public class MyPanel extends JPanel {
 
     MyPanel() {
 
-        //prefer 625*625
-//        this.setPreferredSize(new Dimension(width*25,height*25));
+
         this.cellSize = (625/Math.max(width, height));
         this.setPreferredSize(new Dimension(cellSize*width,cellSize*height));
         this.canvaGol = new gol(height, width);
-
-        System.out.println(cellSize);
-//        this.canvaGol = new gol("test", false);
 
         animate();
     }
@@ -110,7 +106,7 @@ public class MyPanel extends JPanel {
 
 
 
-        t.start();
+        //t.start();
 
         //
 
@@ -121,10 +117,9 @@ public class MyPanel extends JPanel {
 
         //     }
         // });
-        
 
-        
-     
+
+
     }
 
       private class MoveListener implements ActionListener{
