@@ -4,7 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ButtonPanel extends JPanel implements ActionListener {
-    Button stepButton, runButton, stopButton, resetButton;
+
+    Button stepButton, runButton, stopButton, switchModeButton, resetButton;
     MyPanel gridPanel;
 
     ButtonPanel(JFrame frame, MyPanel gridPanel){
@@ -15,6 +16,7 @@ public class ButtonPanel extends JPanel implements ActionListener {
         runButton = new Button("Run");
         stopButton = new Button("Stop");
         resetButton = new Button("Reset");
+        switchModeButton = new Button("Switch");
 
 
         //this.setLayout(new FlowLayout());
@@ -23,13 +25,15 @@ public class ButtonPanel extends JPanel implements ActionListener {
         this.add(runButton);
         this.add(stopButton);
         this.add(resetButton);
+        this.add(switchModeButton);
 
         stepButton.addActionListener(this);
         runButton.addActionListener(this);
         stopButton.addActionListener(this);
         resetButton.addActionListener(this);
+        switchModeButton.addActionListener(this);
 
-        this.setBounds(gridPanel.getPreferredSize().width, 10, 100, 100);
+        this.setBounds(gridPanel.getPreferredSize().width, 10, 100, 150);
 
 
     }
@@ -57,6 +61,23 @@ public class ButtonPanel extends JPanel implements ActionListener {
 //        else if(buttonClicked.equals(resetButton)){
 //            gridPanel.
 //        }
+
+        else if(buttonClicked.equals(stopButton)){
+
+            if(!gridPanel.cave){
+                gridPanel.cave = true;
+            }
+        }
+
+        else if(buttonClicked.equals(switchModeButton)){
+
+            if(gridPanel.cave){
+                gridPanel.cave = false;
+            }
+            else{
+                gridPanel.cave = true;
+            }
+        }
 
 
     }

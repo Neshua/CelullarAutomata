@@ -21,8 +21,6 @@ public class MyFrame extends JFrame {
          int screenX = buttonPanel.getX() + buttonPanel.getWidth();
          int screenY = (int) (panel.getPreferredSize().height + (panel.getPreferredSize().height * .05));
 
-         System.out.println(screenY);
-
          this.setSize(new Dimension(screenX, screenY));
          this.setLocationRelativeTo(null);
          this.setVisible(true);
