@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ButtonPanel extends JPanel implements ActionListener {
-    Button stepButton, runButton, stopButton;
+    Button stepButton, runButton, stopButton, resetButton;
     MyPanel gridPanel;
 
     ButtonPanel(JFrame frame, MyPanel gridPanel){
@@ -14,16 +14,20 @@ public class ButtonPanel extends JPanel implements ActionListener {
         stepButton = new Button("Step");
         runButton = new Button("Run");
         stopButton = new Button("Stop");
+        resetButton = new Button("Reset");
+
 
         //this.setLayout(new FlowLayout());
 
         this.add(stepButton);
         this.add(runButton);
         this.add(stopButton);
+        this.add(resetButton);
 
         stepButton.addActionListener(this);
         runButton.addActionListener(this);
         stopButton.addActionListener(this);
+        resetButton.addActionListener(this);
 
         this.setBounds(gridPanel.getPreferredSize().width, 10, 100, 100);
 
@@ -44,13 +48,15 @@ public class ButtonPanel extends JPanel implements ActionListener {
 
         }
         else if(buttonClicked.equals(runButton)){
-
             gridPanel.t.start();
         }
         else if(buttonClicked.equals(stopButton)){
 
             gridPanel.t.stop();
         }
+//        else if(buttonClicked.equals(resetButton)){
+//            gridPanel.
+//        }
 
 
     }

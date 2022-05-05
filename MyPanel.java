@@ -13,7 +13,7 @@ import java.util.Random;
 public class MyPanel extends JPanel {
 
     gol canvaGol;
-    int height=150, width=150; //set dimensions here
+    int height=25, width=25; //set dimensions here
     boolean auto = false;
     public Timer t;
     int cellSize = 25;
@@ -121,6 +121,7 @@ public class MyPanel extends JPanel {
 
 
     }
+
 
       private class MoveListener implements ActionListener{
             @Override
