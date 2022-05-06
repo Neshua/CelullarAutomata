@@ -1,7 +1,7 @@
 # 2D Map Generator - Procedural Terrain Generation through Cellular Automata
 By Yuki Kawahara, Neshua Aguilar, Ahmed Aldirderi Abdalla Ahmed
 
-##About this Project
+## About this Project
 
 In this project, we implement an algorithm to continuously generate a 2D map. We did this by creating a cellular automaton.
 In a cellular automaton, each cell in a grid changes its state depending on pre-defined rules. Usuallly, it is based off of the state of neighboring cells.
@@ -24,6 +24,7 @@ MyPanel controls the visual elements of the cellular automaton.
 
 To see the integer matrix in action, run the main method of gol.java. 
 It also prompts to save a matrix. Name it to create a text file saving a printed matrix.
+To load a saved file, type in the name of the file (without .txt) when prompted.
 
 ## Application of the Program
 

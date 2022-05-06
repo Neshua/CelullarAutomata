@@ -24,6 +24,7 @@ MyPanel controls the visual elements of the cellular automaton.
 
 To see the integer matrix in action, run the main method of gol.java. 
 It also prompts to save a matrix. Name it to create a text file saving a printed matrix.
+To load a saved file, type in the name of the file (without .txt) when prompted.
 
 ## Application of the Program
 

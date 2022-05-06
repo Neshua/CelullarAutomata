@@ -8,11 +8,8 @@ import java.util.Scanner;
 
 public class ButtonPanel extends JPanel implements ActionListener {
 
-    Button stepButton, runButton, stopButton, switchModeButton, resetButton, saveButton, loadButton;
+    Button stepButton, runButton, stopButton, switchModeButton, resetButton, saveButton, loadButton, ruleButton;
     MyPanel gridPanel;
-//    JSlider probSlider;
-
-//    private static int probMin = 0, probMax = 100, probDefault = 45;
 
 
     ButtonPanel(JFrame frame, MyPanel gridPanel){
@@ -23,12 +20,10 @@ public class ButtonPanel extends JPanel implements ActionListener {
         runButton = new Button("Run");
         stopButton = new Button("Stop");
         resetButton = new Button("Reset");
-        switchModeButton = new Button("Switch");
+        switchModeButton = new Button("Mode: " + modeLabel());
+        ruleButton = new Button("Change to: " + ruleLabel());
         saveButton = new Button("Save");
-//        loadButton = new Button("Load");
-//        probSlider = new JSlider(JSlider.HORIZONTAL, probMin, probMax, probDefault);
-
-
+        loadButton = new Button("Load");
 
         //this.setLayout(new FlowLayout());
 
@@ -37,23 +32,37 @@ public class ButtonPanel extends JPanel implements ActionListener {
         this.add(stopButton);
         this.add(resetButton);
         this.add(switchModeButton);
+        this.add(ruleButton);
         this.add(saveButton);
-//        this.add(loadButton);
+        this.add(loadButton);
 
         stepButton.addActionListener(this);
         runButton.addActionListener(this);
         stopButton.addActionListener(this);
         resetButton.addActionListener(this);
         switchModeButton.addActionListener(this);
+        ruleButton.addActionListener(this);
         saveButton.addActionListener(this);
-//        loadButton.addActionListener(this);
+        loadButton.addActionListener(this);
 
-
-        this.setBounds(gridPanel.getPreferredSize().width, 10, 100, 250);
-
-
+        this.setBounds(gridPanel.getPreferredSize().width, 10, 150, 350);
     }
 
+    private String modeLabel(){
+        if (gridPanel.getMode()){
+            return "Cave";
+        } else {
+            return "Surface";
+        }
+    }
+
+    private String ruleLabel(){
+        if (gridPanel.canvaGol.getRule().equals("Simple")){
+            return "Conway";
+        } else {
+            return "Simple";
+        }
+    }
 
     @Override
     public void actionPerformed(ActionEvent actionEvent){
@@ -74,47 +83,39 @@ public class ButtonPanel extends JPanel implements ActionListener {
 
             gridPanel.t.stop();
         }
-//        else if(buttonClicked.equals(resetButton)){
-//            gridPanel.
-//        }
 
-        else if(buttonClicked.equals(stopButton)){
-
-            if(!gridPanel.cave){
-                gridPanel.cave = true;
+        else if(buttonClicked.equals(switchModeButton)){
+            gridPanel.setMode();
+            switchModeButton.setLabel("Mode: "+ modeLabel());
+            if (gridPanel.canvaGol.isStable()){
+                gridPanel.repaint();
             }
         }
 
-        else if(buttonClicked.equals(switchModeButton)){
-
-            if(gridPanel.cave){
-                gridPanel.cave = false;
+        else if(buttonClicked.equals(ruleButton)){
+            if (gridPanel.canvaGol.getRule().equals("Simple")){
+                gridPanel.canvaGol.setRule("Conway");
+            } else {
+                gridPanel.canvaGol.setRule("Simple");
             }
-            else{
-                gridPanel.cave = true;
-            }
+            ruleButton.setLabel("Change to: " + ruleLabel());
         }
 
         else if (buttonClicked.equals(resetButton)){
             gridPanel.reset();
+            gridPanel.t.stop();
         }
 
         else if (buttonClicked.equals(saveButton)){
             gridPanel.canvaGol.saveMatrix();
         }
 
-//        else if (buttonClicked.equals(loadButton)){
-//            Scanner scanner = new Scanner(System.in);
-//            System.out.println("Type filename of save:\n");
-//            gridPanel.canvaGol.testBoard(scanner.nextLine());
-//        }
+        else if (buttonClicked.equals(loadButton)){
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Type filename of save:\n");
+            gridPanel.loadData(scanner.nextLine());
+        }
 
     }
-
-//    public void slideChange(ChangeEvent e){
-//        if (!probSlider.getValueIsAdjusting()){
-//            gridPanel.canvaGol.setProbability(probSlider.getValue());
-//        }
-//    }
 
 }

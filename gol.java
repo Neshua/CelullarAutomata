@@ -17,21 +17,30 @@ import javax.swing.*;
  */
 public class gol {
 
-    private int col, row;
-    private int numStates = 2;
+    // -- Variables regarding matrix --
     protected int [][]board;
-    private boolean stable = false;
+    private int col, row;
     private int numCells;
 
-    private int maxIterateCount = 10;
-    private int probAlive = 40;
+    // -- Variables regarding rules --
+    private int probAlive = 45;
     private String rule = "Simple";
+    //    private int numStates = 2; // Unused. For future instances if we want more complex automaton
 
+    // -- Variables regarding iteration --
     private boolean auto;
+    private boolean stable = false;
+//    private int maxIterateCount = 10; // Unused. If we want to limit auto iteration (Such as when running Conway)
+
+    // -- Variables regarding generation --
     private boolean generateNew;
     private String loadFilename;
 
-
+    /**
+     * Creates a gol (Game of Life) class
+     * @param height Desired row number of matrix
+     * @param width Desired column number of matrix
+     */
     public gol(int height, int width){
 
         this.col = width;
@@ -44,6 +53,12 @@ public class gol {
         run();
     }
 
+    /**
+     * Creates a gol (Game of Life) class, specifying if it should run automatically.
+     * @param height Desired row number of matrix
+     * @param width Desired column number of matrix
+     * @param auto Whether it should iterate automatically until stable
+     */
     public gol(int height, int width, boolean auto){
         this.col = width;
         this.row = height;
@@ -54,6 +69,11 @@ public class gol {
         run();
     }
 
+    /**
+     * Creates a gol (Game of Life) class based on a presaved text File, and if it should run automatically.
+     * @param filename Filename of a textfile with gol save data.
+     * @param auto Whether it should iterate automatically until stable
+     */
     public gol(String filename, boolean auto){
         this.col = 0;
         this.row = 0;
@@ -88,44 +108,22 @@ public class gol {
         return this.row;
     }
 
-    private void fill(){ //Fills each column as either 1 or 0
-        if (generateNew){
-            Random state = new Random();
-            int upperBound = numStates;
-
-            // Makes outer rims all 0 and randomizes inner matrix
-//        for(int i = 1; i< col-1;i++){
-//            for(int j = 1; j< row-1 ; j++){
-//                board[i][j] = state.nextInt(upperBound);
-//                // board[i][j] = 20;
-//            }
-//        }
-            for(int i = 0; i< col;i++){
-                for(int j = 0; j< row; j++){
-//                    board[i][j] = state.nextInt(upperBound);
-                    int num = state.nextInt(100);
-                    if (num < probAlive){
-                        board[i][j] = 1;
-                    } else {
-                        board[i][j] = 0;
-                    }
-                }
-            }
-
-        } else { // generate preset
-            testBoard(loadFilename);
-        }
-
-        numCells = row * col;
-
+    /**
+     * Return value in a cell
+     * @param x row number
+     * @param y column number
+     * @return int value in the cell
+     */
+    private int getCell(int x, int y){
+        return board[x][y];
     }
 
     /**
-     * Returns the probability that a cell will initialize as alive (out of 100).
-     * @return Int of % that a cell starts alive
+     * Returns whether board is stable or not.
+     * @return true if board is stable, false otherwise.
      */
-    public int returnProbability(){
-        return probAlive;
+    public boolean isStable(){
+        return stable;
     }
 
     /**
@@ -137,21 +135,84 @@ public class gol {
     }
 
     /**
+     * Returns the probability that a cell will initialize as alive (out of 100).
+     * @return Int of % that a cell starts alive
+     */
+    public int getProbability(){
+        return probAlive;
+    }
+
+    /**
+     * Sets the rules of gol.
+     * @param ruleset Ruleset to use (Simple or Conway)
+     */
+    public void setRule(String ruleset){
+        rule = ruleset;
+    }
+
+    /**
+     * Return ruleset
+     * @return String of rule
+     */
+    public String getRule(){
+        return rule;
+    }
+
+    /**
+     * Initializes a gol matrix. If filename is specified, runs testBoard method to load preset data.
+     */
+    private void fill(){ //Fills each column as either 1 or 0
+        if (generateNew){
+            Random state = new Random();
+//            int upperBound = numStates;
+
+            // Makes outer rims all 0 and randomizes inner matrix
+            // Used for testing purposes
+//        for(int i = 1; i< col-1;i++){
+//            for(int j = 1; j< row-1 ; j++){
+//                board[i][j] = state.nextInt(upperBound);
+//                // board[i][j] = 20;
+//            }
+//        }
+
+            for(int i = 0; i< col;i++){
+                for(int j = 0; j< row; j++){
+//                    board[i][j] = state.nextInt(upperBound);
+                    int num = state.nextInt(100); // Randomly chooses a number 0~99. If lower than probAlive, cell is alive.
+                    if (num < probAlive){
+                        board[i][j] = 1;
+                    } else {
+                        board[i][j] = 0;
+                    }
+                }
+            }
+        } else { // generate preset
+            testBoard(loadFilename);
+        }
+        numCells = row * col;
+    }
+
+    /**
      * Reads in a text file and creates a matrix based off of it.
      * @param input String of filename
      */
     public void testBoard(String input) { //reads in a text file and creates a matrix from it
         try {
-            File file = new File(input);
+            File file = new File(input+".txt");
             ArrayList<int[]> presetBoard = new ArrayList<>();
 
             Scanner scLine = new Scanner(file);
 
+            stable = scLine.nextBoolean();
+            probAlive = scLine.nextInt();
+            rule = scLine.next();
+
+            scLine.nextLine();
             while(scLine.hasNextLine()){ //Take each line from textfile and create an int array; add to presetboard
                 String nextLine = scLine.nextLine();
                 String newString = nextLine.replaceAll("[^-?\\d,]", ""); //regex: not digits and comma
                 String[] extracted = newString.split(",");
-                presetBoard.add(toIntArray(extracted)) ;
+                presetBoard.add(toIntArray(extracted));
             }
 
             int colDim = presetBoard.size();
@@ -170,7 +231,7 @@ public class gol {
 
         } catch (FileNotFoundException e){
             System.out.println("No File Found");
-            e.printStackTrace();
+//            e.printStackTrace();
         }
 
     }
@@ -323,19 +384,6 @@ public class gol {
     }
 
     /**
-     * Prints the board as an array
-     * @param mat int matrix
-     */
-    public static void printBoard(int[][]mat){
-        for (int[] row : mat)
- 
-        // converting each row as string
-        // and then printing in a separate line
-        System.out.println(Arrays.toString(row));
-        System.out.println("---------------------------------------");
-    }
-
-    /**
      * Saves the created matrix as a textfile.
      * If an existing filename is chosen, it will overwrite the previous file.
      */
@@ -352,6 +400,10 @@ public class gol {
             }
             FileWriter writer = new FileWriter(filename);
 
+            writer.write(stable + " ");
+            writer.write(probAlive + " ");
+            writer.write(rule + "\n");
+
             for (int[] row : getBoard()){
                 writer.write(Arrays.toString(row));
                 writer.write("\n");
@@ -366,10 +418,10 @@ public class gol {
 
 
     /**
-     * Saves a created matrix as a textfile.
+     * Saves only a created int matrix as a textfile.
      * @param mat int matrix to save
      */
-    public void saveMatrix(int[][] mat){
+    public static void saveMatrix(int[][] mat){
         Scanner sc = new Scanner(System.in);
         System.out.println("What would you like to name the matrix?");
         String filename = sc.next()+".txt";
@@ -396,21 +448,16 @@ public class gol {
     }
 
     /**
-     * Return value in a cell
-     * @param x row number
-     * @param y column number
-     * @return int value in the cell
+     * Prints the board as an array
+     * @param mat int matrix
      */
-    private int getCell(int x, int y){
-        return board[x][y];
-    }
+    public static void printBoard(int[][]mat){
+        for (int[] row : mat)
 
-    /**
-     * Returns whether board is stable or not.
-     * @return true if board is stable, false otherwise.
-     */
-    public boolean isStable(){
-        return stable;
+            // converting each row as string
+            // and then printing in a separate line
+            System.out.println(Arrays.toString(row));
+        System.out.println("---------------------------------------");
     }
 
     /**
@@ -454,7 +501,10 @@ public class gol {
         gol newgol = new gol(20,20, true);
 //        printBoard(newgol.getBoard());
 //        newgol.iterate();
-//        saveMatrix(newgol.getBoard());
+//        newgol.saveMatrix();
+
+        newgol.testBoard("testing.txt");
+
     }
 
 }

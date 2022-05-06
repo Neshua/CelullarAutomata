@@ -7,8 +7,13 @@ import org.w3c.dom.events.MouseEvent;
 
 import java.awt.*;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.Random;
-
+import java.util.Scanner;
 
 public class MyPanel extends JPanel {
 
@@ -101,11 +106,6 @@ public class MyPanel extends JPanel {
             }
 
         }
-
-
-
-
-
         //t.start();
 
         //
@@ -118,15 +118,36 @@ public class MyPanel extends JPanel {
         //     }
         // });
 
-
-
     }
 
+    /**
+     * Resets the board and draws a new one.
+     */
     public void reset(){
         gol newBoard = new gol(height,width);
         this.canvaGol = newBoard;
+        repaint();
+    }
+
+    /**
+     * Loads save Data
+     * @param filename String of filename
+     */
+    public void loadData(String filename){
+        canvaGol.testBoard(filename + ".txt");
+
+        this.width = canvaGol.getNumColumn();
+        this.height = canvaGol.getNumRow();
 
         repaint();
+    }
+
+    public void setMode(){
+        cave = !cave;
+    }
+
+    public boolean getMode(){
+        return cave;
     }
 
       private class MoveListener implements ActionListener{
