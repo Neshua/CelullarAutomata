@@ -9,9 +9,12 @@ import java.awt.*;
 import java.awt.*;
 import java.util.Scanner;
 import javax.swing.*;
+/* Written by Neshua Aguilar, Yuki Kawahara, and Ahmed Aldirderi Abdalla Ahmed
 
-
-
+/**
+ * This class maintains the integer matrix representing each tile in the cellular automata. The core of the program.
+ * gol stands for "Game of Life".
+ */
 public class gol {
 
     private int col, row;
@@ -61,7 +64,10 @@ public class gol {
         run();
     }
 
-
+    /**
+     * Returns the integer matrix recording the state of the board.
+     * @return integer matrix of the state of the board
+     */
     public int[][] getBoard(){
         return this.board;
     }
@@ -114,7 +120,27 @@ public class gol {
 
     }
 
-    private void testBoard(String input) { //reads in a text file and creates a matrix from it
+    /**
+     * Returns the probability that a cell will initialize as alive (out of 100).
+     * @return Int of % that a cell starts alive
+     */
+    public int returnProbability(){
+        return probAlive;
+    }
+
+    /**
+     * Sets the probability that a cell will initialize as alive
+     * @param probability Int of % that a cell should start alive.
+     */
+    public void setProbability(int probability){
+        probAlive = probability;
+    }
+
+    /**
+     * Reads in a text file and creates a matrix based off of it.
+     * @param input String of filename
+     */
+    public void testBoard(String input) { //reads in a text file and creates a matrix from it
         try {
             File file = new File(input);
             ArrayList<int[]> presetBoard = new ArrayList<>();
@@ -162,7 +188,10 @@ public class gol {
         return intArray;
     }
 
-    void iterate(){ //iterate to next state
+    /**
+     * Iterates through a step in the cellular automata
+     */
+    public void iterate(){ //iterate to next state
         int[][] nextGen = new int[col][row];
         int changedCellCount = 0;
 
@@ -239,6 +268,13 @@ public class gol {
         }
     }
 
+    /**
+     * Simple rules. If less than 3 neighbors are alive, the cell dies.
+     * If greater than 4 neighbors are alive, the cell comes alive.
+     * @param currentState state of the cell
+     * @param neighbors number of live neighbors
+     * @return new state of the cell
+     */
     private int simpleConway(int currentState, int neighbors){
         if ((currentState == 1) && (neighbors < 3)){
             return 0;
@@ -251,6 +287,9 @@ public class gol {
         }
     }
 
+    /**
+     * Makes "live" land cells that border "dead" water into sand state. (Only happens when mode "cave" is false).
+     */
     private void sand(){
         int[][] nextGen = new int[col][row];
         int[][] directions = new int[][]{{-1,0},{0,-1},{0,1},{1,0}};
@@ -285,7 +324,7 @@ public class gol {
 
     /**
      * Prints the board as an array
-     * @param mat
+     * @param mat int matrix
      */
     public static void printBoard(int[][]mat){
         for (int[] row : mat)
@@ -297,10 +336,40 @@ public class gol {
     }
 
     /**
+     * Saves the created matrix as a textfile.
+     * If an existing filename is chosen, it will overwrite the previous file.
+     */
+    public void saveMatrix(){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("What would you like to name the matrix?");
+        String filename = sc.next()+".txt";
+        try{
+            File file = new File(filename);
+            if (file.createNewFile()){
+                System.out.println("File "+filename + " created.");
+            } else {
+                System.out.println("Overwriting " + filename);
+            }
+            FileWriter writer = new FileWriter(filename);
+
+            for (int[] row : getBoard()){
+                writer.write(Arrays.toString(row));
+                writer.write("\n");
+            }
+            writer.close();
+
+        } catch (IOException e){
+            System.out.println("An error occured.");
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
      * Saves a created matrix as a textfile.
      * @param mat int matrix to save
      */
-    public static void saveMatrix(int[][] mat){
+    public void saveMatrix(int[][] mat){
         Scanner sc = new Scanner(System.in);
         System.out.println("What would you like to name the matrix?");
         String filename = sc.next()+".txt";
@@ -366,6 +435,9 @@ public class gol {
         }
     }
 
+    /**
+     * Pause function
+     */
     private void pause() {
         try{
             Thread.sleep(500);
@@ -374,6 +446,10 @@ public class gol {
         }
     }
 
+    /**
+     * Main function. Creates a new gol object.
+     * @param args
+     */
     public static void main(String[] args) {
         gol newgol = new gol(20,20, true);
 //        printBoard(newgol.getBoard());

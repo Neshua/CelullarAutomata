@@ -1,12 +1,19 @@
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Scanner;
 
 public class ButtonPanel extends JPanel implements ActionListener {
 
-    Button stepButton, runButton, stopButton, switchModeButton, resetButton;
+    Button stepButton, runButton, stopButton, switchModeButton, resetButton, saveButton, loadButton;
     MyPanel gridPanel;
+//    JSlider probSlider;
+
+//    private static int probMin = 0, probMax = 100, probDefault = 45;
+
 
     ButtonPanel(JFrame frame, MyPanel gridPanel){
 
@@ -17,6 +24,10 @@ public class ButtonPanel extends JPanel implements ActionListener {
         stopButton = new Button("Stop");
         resetButton = new Button("Reset");
         switchModeButton = new Button("Switch");
+        saveButton = new Button("Save");
+//        loadButton = new Button("Load");
+//        probSlider = new JSlider(JSlider.HORIZONTAL, probMin, probMax, probDefault);
+
 
 
         //this.setLayout(new FlowLayout());
@@ -26,14 +37,19 @@ public class ButtonPanel extends JPanel implements ActionListener {
         this.add(stopButton);
         this.add(resetButton);
         this.add(switchModeButton);
+        this.add(saveButton);
+//        this.add(loadButton);
 
         stepButton.addActionListener(this);
         runButton.addActionListener(this);
         stopButton.addActionListener(this);
         resetButton.addActionListener(this);
         switchModeButton.addActionListener(this);
+        saveButton.addActionListener(this);
+//        loadButton.addActionListener(this);
 
-        this.setBounds(gridPanel.getPreferredSize().width, 10, 100, 150);
+
+        this.setBounds(gridPanel.getPreferredSize().width, 10, 100, 250);
 
 
     }
@@ -79,6 +95,26 @@ public class ButtonPanel extends JPanel implements ActionListener {
             }
         }
 
+        else if (buttonClicked.equals(resetButton)){
+            gridPanel.reset();
+        }
+
+        else if (buttonClicked.equals(saveButton)){
+            gridPanel.canvaGol.saveMatrix();
+        }
+
+//        else if (buttonClicked.equals(loadButton)){
+//            Scanner scanner = new Scanner(System.in);
+//            System.out.println("Type filename of save:\n");
+//            gridPanel.canvaGol.testBoard(scanner.nextLine());
+//        }
 
     }
+
+//    public void slideChange(ChangeEvent e){
+//        if (!probSlider.getValueIsAdjusting()){
+//            gridPanel.canvaGol.setProbability(probSlider.getValue());
+//        }
+//    }
+
 }

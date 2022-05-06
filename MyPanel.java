@@ -14,7 +14,7 @@ public class MyPanel extends JPanel {
 
     gol canvaGol;
     int height=25, width=25; //set dimensions here
-    boolean auto = false;
+//    boolean auto = false;
     public Timer t;
     int cellSize = 25;
     boolean cave = false;
@@ -122,6 +122,12 @@ public class MyPanel extends JPanel {
 
     }
 
+    public void reset(){
+        gol newBoard = new gol(height,width);
+        this.canvaGol = newBoard;
+
+        repaint();
+    }
 
       private class MoveListener implements ActionListener{
             @Override
